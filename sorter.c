@@ -21,15 +21,17 @@ void Sorter_startSorting(void){
 		number_array[random_Number] = temp;
 	}
 
+	/*
 	for (i = 0; i < POT; i++){
 		printf("random number_array[%d] = %d\n", i, number_array[i]);
 	}
-
+	*/
 	bubbleSort(number_array, POT);
-
+	/*
 	for (i = 0; i < POT; i++){
 			printf("sorted number_array[%d] = %d\n", i, number_array[i]);
 		}
+	*/
 	free(number_array);
 }
 
