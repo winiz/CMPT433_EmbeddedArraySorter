@@ -9,21 +9,19 @@
 
 void* Sorter_thread(void *arg);
 
-void Sorter_startSorting(void){
-	pthread_t idSorter;
+void Sorter_startSorting(){
 	pthread_create(&idSorter, NULL, Sorter_thread, NULL);
-	sleep(3);
-	pthread_cancel(idSorter);
-
 }
 
-void Sorter_stopSorting(void){
-
+void Sorter_stopSorting(){
+	pthread_cancel(idSorter);
 }
 
 void* Sorter_thread(void *arg){
+//	int total_sorted_array_number= 0;
 	while (1) {
 		int i, random_Number, temp;
+//		total_sorted_array_number++;
 		int *number_array = malloc( POT * sizeof(int)); //dynamically allocating an number array
 
 		for (i = 0; i < POT; i++) { //initializing array to number 1 through the size of the array

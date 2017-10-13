@@ -6,6 +6,7 @@
 #ifndef _SORTER_H_
 #define _SORTER_H_
 
+pthread_t idSorter;
 // Begin/end the background thread which sorts random permutations.
 void Sorter_startSorting(void);
 void Sorter_stopSorting(void);
