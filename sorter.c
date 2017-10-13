@@ -6,35 +6,47 @@
 
 #define POT 100
 
-void Sorter_startSorting(void){
-	int i,random_Number,temp;
-	int *number_array = malloc ( POT * sizeof(int)); //dynamically allocating an number array
+void* Sorter_Sorting(void *arg);
 
-	for (i  =0; i < POT; i++){  //initializing array to number 1 through the size of the array
-		number_array[i] = i+1;
+void Sorter_startSorting(void){
+	pthread_t idSorter;
+	pthread_create(&idSorter, NULL, Sorter_Sorting, NULL);
+
+	pthread_join(idSorter, NULL);
+}
+
+void* Sorter_Sorting(void *arg){
+	int i, random_Number, temp;
+	int *number_array = malloc( POT * sizeof(int)); //dynamically allocating an number array
+
+	for (i = 0; i < POT; i++) { //initializing array to number 1 through the size of the array
+		number_array[i] = i + 1;
 	}
 
-	for (i = 0; i < POT; i++){  //for each element in the array, swapping itwith a random element in the array
+	for (i = 0; i < POT; i++) { //for each element in the array, swapping it with a random element in the array
 		random_Number = rand() % POT;
 		temp = number_array[i];
 		number_array[i] = number_array[random_Number];
 		number_array[random_Number] = temp;
 	}
 
-	/*
-	for (i = 0; i < POT; i++){
-		printf("random number_array[%d] = %d\n", i, number_array[i]);
-	}
-	*/
-	bubbleSort(number_array, POT);
-	/*
-	for (i = 0; i < POT; i++){
-			printf("sorted number_array[%d] = %d\n", i, number_array[i]);
-		}
-	*/
-	free(number_array);
-}
 
+	 for (i = 0; i < POT; i++){
+	 printf("random number_array[%d] = %d\n", i, number_array[i]);
+	 }
+
+
+	bubbleSort(number_array, POT);
+
+
+	 for (i = 0; i < POT; i++){
+	 printf("sorted number_array[%d] = %d\n", i, number_array[i]);
+	 }
+
+
+	free(number_array);
+	pthread_exit(NULL);
+}
 
 void bubbleSort(int *array, int array_size){
 	int i, j, temp;
