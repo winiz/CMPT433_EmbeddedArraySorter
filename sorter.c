@@ -4,7 +4,7 @@
 #include <pthread.h>
 #include "sorter.h"
 
-#define POT 10
+#define POT 100
 
 void Sorter_startSorting(void){
 	int i,random_Number,temp;

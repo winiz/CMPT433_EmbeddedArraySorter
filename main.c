@@ -2,9 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <pthread.h>
+#include "sorter.h"
 
 int main(void){
-	printf("hello world");
 	Sorter_startSorting();
 	return 0;
 }
