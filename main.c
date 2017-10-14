@@ -13,8 +13,8 @@
 
 int main(void){
 	Sorter_startSorting();
-	sleep(2);
-	Sorter_stopSorting();
 	Network_Listening();
+	pthread_join(idSorter,NULL);
+	pthread_join(idNetwork,NULL);
 	return 0;
 }

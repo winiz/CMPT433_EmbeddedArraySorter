@@ -2,20 +2,31 @@
 #include <stdlib.h>
 #include <string.h>
 #include <netdb.h>
+#include <pthread.h>
 #include <sys/socket.h>
 #include <sys/types.h>
 #include <netinet/in.h>
+#include "network.h"
 
 
 #define BUFSIZE 1024
 #define PORTNUM 12345
+
+void* Network_thread(void *arg);
+
+void Network_Listening(){
+	pthread_create(&idNetwork, NULL, Network_thread, NULL);
+}
+void Network_Closing(void){
+	pthread_cancel(idNetwork);
+}
 
 void error(char *msg) {
   perror(msg);
   exit(1);
 }
 
-void Network_Listening(void) {
+void* Network_thread(void *arg) {
 	int the_socket, n;
 	socklen_t serverlen;
 	socklen_t clientlen;
@@ -23,7 +34,6 @@ void Network_Listening(void) {
 	struct sockaddr_in clientaddr;
 	char buf[BUFSIZE];
 
-	printf("checkpoint 1");
 	the_socket = socket(AF_INET, SOCK_DGRAM, 0);
 	if (the_socket < 0) {
 		error("Opening socket");
@@ -38,17 +48,14 @@ void Network_Listening(void) {
 		error("bind");
 	}
 	clientlen = sizeof(struct sockaddr_in);
-	printf("checkpoint 2");
 
 	while (1) {
-		printf("Waiting for data...");
 		n = recvfrom(the_socket, buf, BUFSIZE, 0,
 				(struct sockaddr *) &clientaddr, &clientlen);
-
 		if (n < 0) {
 			error("recvfrom");
 		}
-
 		printf("received a datagram: %s\n", buf);
+		memset(&buf, 0, BUFSIZE);
 	}
 }
