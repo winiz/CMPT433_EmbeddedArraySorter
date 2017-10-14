@@ -8,22 +8,21 @@
 #include <netinet/in.h>
 #include "network.h"
 
-
 #define BUFSIZE 16
 #define PORTNUM 12345
 
 void* Network_thread(void *arg);
 
-void Network_Listening(){
+void Network_Listening() {
 	pthread_create(&idNetwork, NULL, Network_thread, NULL);
 }
-void Network_Closing(void){
+void Network_Closing(void) {
 	pthread_cancel(idNetwork);
 }
 
 void error(char *msg) {
-  perror(msg);
-  exit(1);
+	perror(msg);
+	exit(1);
 }
 
 void* Network_thread(void *arg) {
@@ -50,14 +49,30 @@ void* Network_thread(void *arg) {
 	clientlen = sizeof(struct sockaddr_in);
 
 	while (1) {
+		memset(&buf, 0, BUFSIZE);
 		n = recvfrom(the_socket, buf, BUFSIZE, 0,
 				(struct sockaddr *) &clientaddr, &clientlen);
 		if (n < 0) {
 			error("recvfrom");
 		}
-		printf("received a datagram: %s\n", buf);
-		if (strcmp(buf,"stop")){
-			printf("gogogo");
+		printf("%s", buf);
+
+		if(memcmp(buf, "help", strlen("help")) == 0) {
+			printf("Accepted command examples:\n"
+					"count      -- display number arrays sorted.\n"
+					"get length -- display length of array currently being sorted.\n"
+					"get array  -- display the full array being sorted.\n"
+					"get 10     -- display the tenth element of array currently being sorted.\n"
+					"stop       -- cause the server program to end.\n");
+		}
+		else if (memcmp(buf, "count", strlen("help")) == 0){
+			//TODO
+		}
+		else if (memcmp(buf, "stop", strlen("help")) == 0){
+			//TODO
+		}
+		else{
+			printf("unkown command, try help\n");
 		}
 		memset(&buf, 0, BUFSIZE);
 	}

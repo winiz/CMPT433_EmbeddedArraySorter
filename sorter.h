@@ -23,7 +23,7 @@ int Sorter_getArrayLength(void);
 int* Sorter_getArrayData(int *length);
 
 // Get the number of arrays which have finished being sorted.
-long long Sorter_getNumberArraysSorted(void);
+long long Sorter_getNumberArraysSorted(long long *NumberArraysSorted);
 
 void bubbleSort(int *array, int array_size);
 

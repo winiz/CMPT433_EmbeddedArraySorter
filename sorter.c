@@ -18,10 +18,10 @@ void Sorter_stopSorting(){
 }
 
 void* Sorter_thread(void *arg){
-	int total_sorted_array_number= 0;
+	int total_sorted_array_count= 0;
 	while (1) {
 		int i, random_Number, temp;
-		total_sorted_array_number++;
+		total_sorted_array_count++;
 		int *number_array = malloc( POT * sizeof(int)); //dynamically allocating an number array
 
 		for (i = 0; i < POT; i++) { //initializing array to number 1 through the size of the array
