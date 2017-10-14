@@ -18,10 +18,10 @@ void Sorter_stopSorting(){
 }
 
 void* Sorter_thread(void *arg){
-//	int total_sorted_array_number= 0;
+	int total_sorted_array_number= 0;
 	while (1) {
 		int i, random_Number, temp;
-//		total_sorted_array_number++;
+		total_sorted_array_number++;
 		int *number_array = malloc( POT * sizeof(int)); //dynamically allocating an number array
 
 		for (i = 0; i < POT; i++) { //initializing array to number 1 through the size of the array
@@ -35,19 +35,14 @@ void* Sorter_thread(void *arg){
 			number_array[random_Number] = temp;
 		}
 
-		for (i = 0; i < POT; i++) {
-			printf("random number_array[%d] = %d\n", i, number_array[i]);
-		}
+//		for (i = 0; i < POT; i++) {
+//			printf("random number_array[%d] = %d\n", i, number_array[i]);
+//		}
 
 		bubbleSort(number_array, POT);
 
-		for (i = 0; i < POT; i++) {
-			printf("sorted number_array[%d] = %d\n", i, number_array[i]);
-		}
-
 		free(number_array);
 	}
-	pthread_exit(NULL);
 }
 
 void bubbleSort(int *array, int array_size){
