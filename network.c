@@ -9,7 +9,7 @@
 #include "network.h"
 
 
-#define BUFSIZE 1024
+#define BUFSIZE 16
 #define PORTNUM 12345
 
 void* Network_thread(void *arg);
@@ -56,6 +56,9 @@ void* Network_thread(void *arg) {
 			error("recvfrom");
 		}
 		printf("received a datagram: %s\n", buf);
+		if (strcmp(buf,"stop")){
+			printf("gogogo");
+		}
 		memset(&buf, 0, BUFSIZE);
 	}
 }
